@@ -99,13 +99,16 @@ int main(void) {
 	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
+	//depth testing
+	glEnable(GL_DEPTH_TEST);
+
 	//main loop
 	while (!glfwWindowShouldClose(window)) {
 		
 		//colore del back buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		//assegno effettivamente il colore al back buffer
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//attivo il program degli shaders
 		shaderProgram.Activate();
 
@@ -116,6 +119,10 @@ int main(void) {
 		glm::mat4 view1 = glm::mat4(1.0f);
 		//inizializzo la matrice projection
 		glm::mat4 projection1 = glm::mat4(1.0f);
+
+		//rotazione
+		model1 = glm::rotate(model1, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+
 
 		//setto la posizione della camera
 		view1 = glm::translate(view1, glm::vec3(0.0f, -0.5f, -2.0f));
