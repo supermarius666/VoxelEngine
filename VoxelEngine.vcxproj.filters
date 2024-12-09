@@ -16,6 +16,9 @@
     <Filter Include="File di origine\Shaders">
       <UniqueIdentifier>{0193078e-8494-4899-9ec9-b9c41ce84e5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\Textures">
+      <UniqueIdentifier>{91f7d156-3003-4df2-be6b-ba830e9a8e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -61,5 +64,13 @@
     <ClInclude Include="VAO.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="mine.png">
+      <Filter>File di origine\Textures</Filter>
+    </Image>
+    <Image Include="pop_cat.png">
+      <Filter>File di origine\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
