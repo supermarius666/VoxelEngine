@@ -81,6 +81,8 @@ int main(void) {
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+	//definisco la variabile uniform scale
+	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 	
 	//main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -91,6 +93,10 @@ int main(void) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		//attivo il program degli shaders
 		shaderProgram.Activate();
+
+		//setto il valore della variabile uniform scale
+		glUniform1f(uniID, 0.5f);
+
 		//bind VAO
 		VAO1.Bind();
 		//disegno
