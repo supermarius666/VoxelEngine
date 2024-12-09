@@ -16,16 +16,22 @@
 //vertici di un triangolo equilatero
 GLfloat vertices[] = {  
 	//vertici		      //colori                       //texture coords
-	-0.5f,	-0.5f,	0.0f,	1.0f,	0.0f,	 0.0f,		0.0f,	0.0f,	//punto in basso a sinistra
-	-0.5f,	 0.5f,	0.0f,	0.0f,	1.0f,	 0.0f,		0.0f,	1.0f,	//punto in basso a destra
-	 0.5f,   0.5f,	0.0f,	0.0f,	0.0f,	 1.0f,		1.0f,	1.0f,	//punto in alto
-	 0.5f,  -0.5f,	0.0f,	1.0f,	1.0f,	 1.0f,		1.0f,	0.0f,	//interno a sinistra
+	-0.5f,	 0.0f,	0.5f,	0.83f,	0.70f,	 0.44f,		0.0f,	0.0f,	
+	-0.5f,	 0.0f, -0.5f,	0.83f,	0.70f,	 0.44f,		5.0f,	0.0f,	
+	 0.5f,   0.0f, -0.5f,	0.83f,	0.70f,	 0.44f,		0.0f,	0.0f,	
+	 0.5f,   0.0f,	0.5f,	0.83f,	0.70f,	 0.44f,		5.0f,	0.0f,	
+	 0.0f,   0.8f,	0.0f,	0.92f,	0.86f,	 0.76f,		2.5f,	5.0f,	
 };
 
 //indici della forma
 GLuint indices[] = {
-	0, 2, 1,
-	0, 3, 2,
+	0, 1, 2,
+	0, 2, 3,
+	0, 1, 4,
+	1, 2, 4,
+	2, 3, 4,
+	3, 0, 4
+
 };
 
 const unsigned int WIDTH = 800;
@@ -90,7 +96,7 @@ int main(void) {
 	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
 	//texture
-	Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
 	//main loop
@@ -137,7 +143,7 @@ int main(void) {
 		//bind VAO
 		VAO1.Bind();
 		//disegno
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 		//swap buffers in modo che l'imm agine venga aggiornata
 		glfwSwapBuffers(window);
 		//aspetta per i vari eventi e risponde
