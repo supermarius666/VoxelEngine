@@ -2,6 +2,9 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 #include<stb/stb_image.h>
+#include<glm/glm.hpp>	
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
 
 #include"shaderClass.h"
 #include"Texture.h"
@@ -25,7 +28,8 @@ GLuint indices[] = {
 	0, 3, 2,
 };
 
-
+const unsigned int WIDTH = 800;
+const unsigned int HEIGHT = 800;
 
 
 int main(void) {
@@ -47,7 +51,7 @@ int main(void) {
 	
 
 	//Creazione finestra 800x800
-	GLFWwindow* window = glfwCreateWindow(800, 800, "Voxel Engine", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Voxel Engine", NULL, NULL);
 	if (!window) {
 		std::cout << "Failed to create Window!" << std::endl;
 		glfwTerminate();
@@ -62,7 +66,7 @@ int main(void) {
 
 	//specifico il viewport di OpenGL nella finestra, cioè da dove fino a dove posso vedere
 	//in questo caso ho messo da (0,0) a (800,800) quindi tutta la finestra
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, WIDTH, HEIGHT);
 
 	
 	//shaders????
@@ -98,6 +102,33 @@ int main(void) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		//attivo il program degli shaders
 		shaderProgram.Activate();
+
+
+		//inizializzo la matrice model
+		glm::mat4 model1 = glm::mat4(1.0f);
+		//inizializzo la matrice view
+		glm::mat4 view1 = glm::mat4(1.0f);
+		//inizializzo la matrice projection
+		glm::mat4 projection1 = glm::mat4(1.0f);
+
+		//setto la posizione della camera
+		view1 = glm::translate(view1, glm::vec3(0.0f, -0.5f, -2.0f));
+		//setto la proiezione
+		projection1 = glm::perspective(glm::radians(45.0f),float(WIDTH / HEIGHT), 0.1f, 100.0f);
+
+
+		//setto la variabile uniform model
+		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model1));
+
+		//setto la variabile uniform view
+		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view1));
+
+		//setto la variabile uniform projection
+		int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
+		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection1));
+
 
 		//setto il valore della variabile uniform scale
 		glUniform1f(uniID, 0.5f);
