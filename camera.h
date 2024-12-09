@@ -25,7 +25,7 @@ class Camera {
 
 		bool firstClick = true;
 
-		void Input(GLFWwindow* window);
+		void Input(GLFWwindow* window, float deltaTime);
 		void Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char *uniform);
 
 };

@@ -17,26 +17,26 @@ void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shade
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection *view));
 }
 
-void Camera::Input(GLFWwindow* window) {
+void Camera::Input(GLFWwindow* window, float deltaTime) {
 	
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		Position += speed * Orientation;
+		Position += speed * Orientation * deltaTime;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		Position += speed * -glm::normalize(glm::cross(Orientation, Up));
+		Position += speed * -glm::normalize(glm::cross(Orientation, Up)) * deltaTime;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		Position += speed * -Orientation;
+		Position += speed * -Orientation * deltaTime;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		Position += speed * glm::normalize(glm::cross(Orientation, Up));
+		Position += speed * glm::normalize(glm::cross(Orientation, Up)) * deltaTime;
 	}
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		Position += speed * Up;
+		Position += speed * Up * deltaTime;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-		Position += speed * -Up;
-	}	
+		Position += speed * -Up * deltaTime;
+	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
 		speed = 0.4f;
 	}

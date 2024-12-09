@@ -104,9 +104,22 @@ int main(void) {
 	//camera
 	Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
+	// Tempo tra il frame corrente e il frame precedente
+	float deltaTime = 0.0f;
+	// Tempo del frame precedente
+	float lastTime = 0.0f;
+
 	//main loop
 	while (!glfwWindowShouldClose(window)) {
 		
+		// Calcola il tempo corrente
+		float currentTime = glfwGetTime();
+		// Calcola deltaTime
+		deltaTime = currentTime - lastTime;
+		// Aggiorna lastTime per il prossimo frame
+		lastTime = currentTime;
+
+
 		//colore del back buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		//assegno effettivamente il colore al back buffer
@@ -116,7 +129,7 @@ int main(void) {
 
 		
 		//input
-		camera.Input(window);
+		camera.Input(window, deltaTime);
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 		
 		popCat.Bind();
