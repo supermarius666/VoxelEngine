@@ -4,6 +4,7 @@
 #include<stb/stb_image.h>
 
 #include"shaderClass.h"
+#include"Texture.h"
 #include"VAO.h"
 #include"VBO.h"
 #include"EBO.h"
@@ -85,48 +86,8 @@ int main(void) {
 	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
 	//texture
-	int width, height, nrChannels;
-	//specifica che l'origine dell'immagine è in alto a sinistra
-	stbi_set_flip_vertically_on_load(true);
-	//carico l'immagine sotto forma di array di unsigned char
-	unsigned char* bytes = stbi_load("pop_cat.png", &width, &height, &nrChannels, 0);
-
-	//controllo data
-	if (!bytes) {
-		std::cout << "Failed to load texture" << std::endl;
-		stbi_image_free(bytes);
-		return -1;
-	}
-	
-	//genero un id per la texture
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glActiveTexture(GL_TEXTURE0); 
-	//specifico che tipo di texture sto creando
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	//setto i parametri della texture
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	//setto i parametri di wrapping 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
-	//carico l'immagine nella texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-	//genero i mipmaps: sono delle versioni ridotte dell'immagine che vengono usate per il rendering a distanza
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	//libero la memoria dell'immagine
-	stbi_image_free(bytes);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//setto la variabile uniform sampler2D texture
-	GLuint tex0Uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-	shaderProgram.Activate();
-	glUniform1i(tex0Uni, 0);
-
+	Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	popCat.texUnit(shaderProgram, "tex0", 0);
 
 	//main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -140,7 +101,7 @@ int main(void) {
 
 		//setto il valore della variabile uniform scale
 		glUniform1f(uniID, 0.5f);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		popCat.Bind();
 
 		//bind VAO
 		VAO1.Bind();
@@ -159,7 +120,7 @@ int main(void) {
 	EBO1.Delete();
 	shaderProgram.Delete();
 	//distrugge la texture
-	glDeleteTextures(1, &texture);
+	popCat.Delete();
 
 	//distrugge la finestra
 	glfwDestroyWindow(window);
