@@ -42,6 +42,26 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile) {
 	glDeleteShader(fragmentShader);
 }
 
+void Shader::compileErrors(unsigned int shader, const char* type) {
+	GLint hasCompiled;
+	char infoLog[1024];
+	if (std::string(type) == "PROGRAM") {
+		glGetProgramiv(shader, GL_COMPILE_STATUS, &hasCompiled);
+		if (hasCompiled == GL_FALSE) {
+			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+			std::cout << "SHADER_COMPILATION_ERROR for: " << type << "\n" << infoLog << std::endl;
+		}
+	}
+	else {
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
+		if (hasCompiled == GL_FALSE) {
+			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+			std::cout << "SHADER_COMPILATION_ERROR for: " << type << "\n" << infoLog << std::endl;
+		}
+	}
+}
+
+
 void Shader::Activate() {
 	glUseProgram(ID);
 }

@@ -1,7 +1,7 @@
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
-
+#include<stb/stb_image.h>
 
 #include"shaderClass.h"
 #include"VAO.h"
@@ -11,21 +11,17 @@
 
 //vertici di un triangolo equilatero
 GLfloat vertices[] = {
-	//vertici				                            //colori
-	-0.5f,  -0.5f * float(sqrt(3)) / 3,		0.0f,	0.8f, 0.3f, 0.02f, //punto in basso a sinistra
-	0.5f,   -0.5f * float(sqrt(3)) / 3,		0.0f,	0.8f, 0.3f, 0.02f,//punto in basso a destra
-	0.0f,    0.5f * float(sqrt(3)) * 2 / 3, 0.0f,	1.0f, 0.6f, 0.32f,//punto in alto
-	-0.25f,  0.5f * float(sqrt(3)) / 6,		0.0f,	0.9f, 0.45f, 0.17f,//interno a sinistra
-	0.25f,   0.5f * float(sqrt(3)) / 6,		0.0f,	0.9f, 0.45f, 0.17f,//interno a destra
-	0.0f,   -0.5f * float(sqrt(3)) / 3,		0.0f,	0.8f, 0.3f, 0.02f,//iterno in basso
-
+	        //vertici		      //colori
+	-0.5f,	-0.5f,	0.0f,	1.0f,	0.0f,	 0.0f,	//punto in basso a sinistra
+	-0.5f,	 0.5f,	0.0f,	0.0f,	1.0f,	 0.0f,	//punto in basso a destra
+	 0.5f,   0.5f,	0.0f,	0.0f,	0.0f,	 1.0f,	//punto in alto
+	 0.5f,  -0.5f,	0.0f,	1.0f,	1.0f,	 1.0f,	//interno a sinistra
 };
 
 //indici della forma
 GLuint indices[] = {
-	0, 3, 5,
-	3, 2, 4,
-	5, 4, 1
+	0, 2, 1,
+	0, 3, 2,
 };
 
 

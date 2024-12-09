@@ -36,6 +36,9 @@
     <ClCompile Include="VAO.cpp">
       <Filter>File di risorse</Filter>
     </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>File di risorse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
