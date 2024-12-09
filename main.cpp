@@ -7,6 +7,7 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #include"shaderClass.h"
+#include"camera.h"
 #include"Texture.h"
 #include"VAO.h"
 #include"VBO.h"
@@ -92,15 +93,16 @@ int main(void) {
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-	//definisco la variabile uniform scale
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
-
 	//texture
 	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
 	//depth testing
 	glEnable(GL_DEPTH_TEST);
+
+
+	//camera
+	Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
 	//main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -112,39 +114,11 @@ int main(void) {
 		//attivo il program degli shaders
 		shaderProgram.Activate();
 
-
-		//inizializzo la matrice model
-		glm::mat4 model1 = glm::mat4(1.0f);
-		//inizializzo la matrice view
-		glm::mat4 view1 = glm::mat4(1.0f);
-		//inizializzo la matrice projection
-		glm::mat4 projection1 = glm::mat4(1.0f);
-
-		//rotazione
-		model1 = glm::rotate(model1, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
-
-
-		//setto la posizione della camera
-		view1 = glm::translate(view1, glm::vec3(0.0f, -0.5f, -2.0f));
-		//setto la proiezione
-		projection1 = glm::perspective(glm::radians(45.0f),float(WIDTH / HEIGHT), 0.1f, 100.0f);
-
-
-		//setto la variabile uniform model
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model1));
-
-		//setto la variabile uniform view
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view1));
-
-		//setto la variabile uniform projection
-		int projectionLoc = glGetUniformLocation(shaderProgram.ID, "projection");
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection1));
-
-
-		//setto il valore della variabile uniform scale
-		glUniform1f(uniID, 0.5f);
+		
+		//input
+		camera.Input(window);
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+		
 		popCat.Bind();
 
 		//bind VAO

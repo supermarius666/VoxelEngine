@@ -8,13 +8,11 @@ out vec2 texCoord;
 
 uniform float scale;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 camMatrix;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(aPos, 1.0f);
+	gl_Position = camMatrix * vec4(aPos, 1.0f);
 	color = aColor;
 	texCoord = aTex;
 }

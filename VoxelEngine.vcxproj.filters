@@ -45,6 +45,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>File di risorse</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>File di risorse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -68,6 +71,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
