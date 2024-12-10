@@ -14,7 +14,7 @@
 #include"EBO.h"
 
 
-//vertici di un triangolo equilatero
+//vertici di una piramide equilatero
 GLfloat vertices[] = {  
 	//vertici		      //colori                       //texture coords
 	-0.5f,	 0.0f,	0.5f,	0.83f,	0.70f,	 0.44f,		0.0f,	0.0f,	
@@ -26,40 +26,40 @@ GLfloat vertices[] = {
 
 GLfloat cube[] = {
 	// Front face (Rosso)
-   -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 0
-	0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 1
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 2
-   -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 3
+	-0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // Vertice 0
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f, // Vertice 1
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f, // Vertice 2
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f, // Vertice 3
 
-   // Back face (Verde)
-   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 4
-	0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 5
-	0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 6
-   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 7
+	// Back face (Verde)
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f, // Vertice 4
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, // Vertice 5
+	 0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f, // Vertice 6
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f, // Vertice 7
 
-   // Top face (Blu)
-   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Vertice 8
-	0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Vertice 9
-	0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f, // Vertice 10
-   -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f, // Vertice 11
+	// Top face (Blu)
+	-0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, // Vertice 8
+	 0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f, // Vertice 9
+	 0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 0.0f, // Vertice 10
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f, // Vertice 11
 
-   // Bottom face (Giallo)
-   -0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Vertice 12
-	0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Vertice 13
-	0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f, // Vertice 14
-   -0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f, // Vertice 15
+	// Bottom face (Giallo)
+	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 0.0f, // Vertice 12
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, // Vertice 13
+	 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f, // Vertice 14
+	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f, // Vertice 15
 
-   // Left face (Ciano)
-   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, // Vertice 16
-   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vertice 17
-   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vertice 18
-   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, // Vertice 19
+	// Left face (Ciano)
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,  1.0f, 0.0f, // Vertice 16
+	-0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,  0.0f, 0.0f, // Vertice 17
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,  0.0f, 1.0f, // Vertice 18
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,  1.0f, 1.0f, // Vertice 19
 
-   // Right face (Magenta)
-	0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f, // Vertice 20
-	0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vertice 21
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vertice 22
-	0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f  // Vertice 23
+	// Right face (Magenta)
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,  0.0f, 0.0f, // Vertice 20
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,  1.0f, 0.0f, // Vertice 21
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,  1.0f, 1.0f, // Vertice 22
+	 0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f,  0.0f, 1.0f  // Vertice 23
 };
 
 
@@ -156,8 +156,10 @@ int main(void) {
 	EBO cube_indices(cubeIndices, sizeof(cubeIndices));
 
 	//link VBO to VAO
-	cubeVAO.LinkAttrib(cube_vertices, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-	cubeVAO.LinkAttrib(cube_vertices, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	cubeVAO.LinkAttrib(cube_vertices, 0, 3, GL_FLOAT, 8* sizeof(float), (void*)0);
+	cubeVAO.LinkAttrib(cube_vertices, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	cubeVAO.LinkAttrib(cube_vertices, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
 	cubeVAO.Unbind();
 	cube_vertices.Unbind();
 	cube_indices.Unbind();
@@ -170,8 +172,11 @@ int main(void) {
 	EBO1.Unbind();
 
 	//texture
-	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	popCat.texUnit(shaderProgram, "tex0", 0);
+	//Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	//popCat.texUnit(shaderProgram, "tex0", 0);
+
+	Texture cubeT("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	cubeT.texUnit(shaderProgram, "tex0", 0);
 
 	//depth testing
 	glEnable(GL_DEPTH_TEST);
@@ -209,6 +214,7 @@ int main(void) {
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 		
 		//popCat.Bind();
+		cubeT.Bind();
 
 
 		//bind VAO
@@ -232,7 +238,7 @@ int main(void) {
 	cube_indices.Delete();
 	shaderProgram.Delete();
 	//distrugge la texture
-	popCat.Delete();
+	//popCat.Delete();
 
 	//distrugge la finestra
 	glfwDestroyWindow(window);
