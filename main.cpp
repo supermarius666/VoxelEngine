@@ -175,7 +175,7 @@ int main(void) {
 	//Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	//popCat.texUnit(shaderProgram, "tex0", 0);
 
-	Texture cubeT("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture cubeT("mine.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
 	cubeT.texUnit(shaderProgram, "tex0", 0);
 
 	//depth testing
