@@ -24,6 +24,67 @@ GLfloat vertices[] = {
 	 0.0f,   0.8f,	0.0f,	0.92f,	0.86f,	 0.76f,		2.5f,	5.0f,	
 };
 
+GLfloat cube[] = {
+	// Front face (Rosso)
+   -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 0
+	0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 1
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 2
+   -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, // Vertice 3
+
+   // Back face (Verde)
+   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 4
+	0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 5
+	0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 6
+   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Vertice 7
+
+   // Top face (Blu)
+   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Vertice 8
+	0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Vertice 9
+	0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f, // Vertice 10
+   -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f, // Vertice 11
+
+   // Bottom face (Giallo)
+   -0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Vertice 12
+	0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Vertice 13
+	0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f, // Vertice 14
+   -0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f, // Vertice 15
+
+   // Left face (Ciano)
+   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, // Vertice 16
+   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vertice 17
+   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Vertice 18
+   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, // Vertice 19
+
+   // Right face (Magenta)
+	0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f, // Vertice 20
+	0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vertice 21
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Vertice 22
+	0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f  // Vertice 23
+};
+
+
+//indici del cubo
+GLuint cubeIndices[] = {
+	// Front face
+  0, 1, 2,
+  2, 3, 0,
+  // Top face
+  8, 9, 10,
+  10, 11, 8,
+  // Back face
+  4, 5, 6,
+  6, 7, 4,
+  // Bottom face
+  12, 13, 14,
+  14, 15, 12,
+  // Left face
+  16, 17, 18,
+  18, 19, 16,
+  // Right face
+  20, 21, 22,
+  22, 23, 20
+};
+
 //indici della forma
 GLuint indices[] = {
 	0, 1, 2,
@@ -80,11 +141,26 @@ int main(void) {
 	Shader shaderProgram("default.vert", "default.frag");
 
 	VAO VAO1;
+	//cube VAO
+	VAO cubeVAO;
+
 	VAO1.Bind();
+	cubeVAO.Bind();
 
 	//generate vertex
 	VBO VBO1(vertices, sizeof(vertices));
 	EBO EBO1(indices, sizeof(indices));
+
+	//link VBO to VAO
+	VBO cube_vertices(cube, sizeof(cube));
+	EBO cube_indices(cubeIndices, sizeof(cubeIndices));
+
+	//link VBO to VAO
+	cubeVAO.LinkAttrib(cube_vertices, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
+	cubeVAO.LinkAttrib(cube_vertices, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	cubeVAO.Unbind();
+	cube_vertices.Unbind();
+	cube_indices.Unbind();
 	
 	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
 	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -132,12 +208,14 @@ int main(void) {
 		camera.Input(window, deltaTime);
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 		
-		popCat.Bind();
+		//popCat.Bind();
+
 
 		//bind VAO
 		VAO1.Bind();
+		cubeVAO.Bind();
 		//disegno
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, sizeof(cubeIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
 		//swap buffers in modo che l'imm agine venga aggiornata
 		glfwSwapBuffers(window);
 		//aspetta per i vari eventi e risponde
@@ -149,6 +227,9 @@ int main(void) {
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
+	cubeVAO.Delete();
+	cube_vertices.Delete();
+	cube_indices.Delete();
 	shaderProgram.Delete();
 	//distrugge la texture
 	popCat.Delete();

@@ -46,6 +46,10 @@ void Camera::Input(GLFWwindow* window, float deltaTime) {
 
 	//mouse input
 	double mouseX, mouseY;
+	static float yaw = -90.0f;  // Angolo di rotazione attorno all'asse Y (inizialmente puntato verso -Z)
+	static float pitch = 0.0f;  // Angolo di rotazione attorno all'asse X
+	const float pitchLimit = 89.0f; // Limite massimo di pitch per evitare capovolgimenti
+
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -54,21 +58,29 @@ void Camera::Input(GLFWwindow* window, float deltaTime) {
 			firstClick = false;
 		}
 
+		// Ottieni la posizione corrente del mouse
 		glfwGetCursorPos(window, &mouseX, &mouseY);
-		float rotx = sensitivity * (float)(mouseY - height / 2) / height;
-		float roty = sensitivity * (float)(mouseX - width / 2) / width;
 
-		glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotx), glm::normalize(glm::cross(Orientation, Up)));
-	
-		if ((glm::angle(newOrientation, Up) <= glm::radians(5.0f) or glm::angle(newOrientation, -Up) <= glm::radians(5.0f)))
-		{
-			Orientation = newOrientation;
-		}
+		// Calcola le differenze di movimento del mouse
+		float offsetX = sensitivity * (float)(mouseX - width / 2);
+		float offsetY = sensitivity * (float)(mouseY - height / 2);
 
-		Orientation = glm::rotate(Orientation, glm::radians(-roty), Up);
+		// Aggiorna yaw e pitch basandoti sui movimenti del mouse
+		yaw += offsetX;
+		pitch -= offsetY; // Inverti l'asse Y perché il movimento del mouse è invertito per la pitch
 
+		// Limita il pitch per evitare capovolgimenti (gimbal lock)
+		if (pitch > pitchLimit) pitch = pitchLimit;
+		if (pitch < -pitchLimit) pitch = -pitchLimit;
+
+		// Calcola il nuovo vettore di orientamento usando yaw e pitch
+		Orientation.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		Orientation.y = sin(glm::radians(pitch));
+		Orientation.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		Orientation = glm::normalize(Orientation);
+
+		// Reimposta il mouse al centro della finestra
 		glfwSetCursorPos(window, width / 2, height / 2);
-
 	}
 	else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
