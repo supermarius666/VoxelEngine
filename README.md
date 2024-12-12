@@ -7,6 +7,8 @@ This project is the foundation for a future voxel simulator. It is currently in 
 - **Camera Control**: Implemented a camera system allowing movement and orientation control through keyboard and mouse input.
 - **Shader Management**: Utilizes custom shader classes to handle vertex and fragment shaders.
 - **Texture Mapping**: Basic texture loading and mapping functionalities are in place.
+![minecraf grass block](images/img1.png)
+
 
 ## Future Plans
 - **Voxel Simulation**: The primary goal is to expand the project into a full-fledged voxel simulator.
